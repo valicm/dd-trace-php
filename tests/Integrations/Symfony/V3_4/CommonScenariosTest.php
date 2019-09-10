@@ -6,8 +6,10 @@ use DDTrace\Tests\Common\SpanAssertion;
 use DDTrace\Tests\Common\WebFrameworkTestCase;
 use DDTrace\Tests\Frameworks\Util\Request\RequestSpec;
 
-final class CommonScenariosTest extends WebFrameworkTestCase
+class CommonScenariosTest extends WebFrameworkTestCase
 {
+    const IS_SANDBOXED = false;
+
     protected static function getAppIndexScript()
     {
         return __DIR__ . '/../../../Frameworks/Symfony/Version_3_4/web/app.php';
@@ -15,9 +17,12 @@ final class CommonScenariosTest extends WebFrameworkTestCase
 
     protected static function getEnvs()
     {
-        return array_merge(parent::getEnvs(), [
-            'DD_SERVICE_NAME' => 'test_symfony_34',
-        ]);
+        $envs = parent::getEnvs();
+        if (!static::IS_SANDBOXED) {
+            $envs['DD_TRACE_SANDBOX_ENABLED'] = 'false';
+        }
+        $envs['DD_SERVICE_NAME'] = 'test_symfony_34';
+        return $envs;
     }
 
     /**
@@ -32,7 +37,7 @@ final class CommonScenariosTest extends WebFrameworkTestCase
             $this->call($spec);
         });
 
-        $this->assertExpectedSpans($traces, $spanExpectations);
+        $this->assertExpectedSpans($traces, $spanExpectations, static::IS_SANDBOXED);
     }
 
     public function provideSpecs()

@@ -21,6 +21,7 @@ use DDTrace\Integrations\PDO\PDOSandboxedIntegration;
 use DDTrace\Integrations\Predis\PredisIntegration;
 use DDTrace\Integrations\Slim\SlimIntegration;
 use DDTrace\Integrations\Symfony\SymfonyIntegration;
+use DDTrace\Integrations\Symfony\SymfonySandboxedIntegration;
 use DDTrace\Integrations\Web\WebIntegration;
 use DDTrace\Integrations\ZendFramework\ZendFrameworkIntegration;
 use DDTrace\Log\LoggingTrait;
@@ -85,6 +86,8 @@ class IntegrationsLoader
                 '\DDTrace\Integrations\Guzzle\GuzzleSandboxedIntegration';
             $this->integrations[PDOSandboxedIntegration::NAME] =
                 '\DDTrace\Integrations\PDO\PDOSandboxedIntegration';
+            $this->integrations[SymfonySandboxedIntegration::NAME] =
+                '\DDTrace\Integrations\Symfony\SymfonySandboxedIntegration';
         }
     }
 
