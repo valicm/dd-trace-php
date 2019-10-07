@@ -92,9 +92,9 @@ function dd_wrap_autoloader()
     /* CodeIgniter v2 does not use an autoloader. Tracing the CI_Hooks
      * constructor let's us set up the world because it is called very early
      * in CodeIgniter's startup process before we need to trace anything. */
-    dd_trace_method('CI_Hooks', '__construct', function () {
+    dd_trace('CI_Hooks', '__construct', function () {
         require __DIR__ . '/dd_init.php';
-        return false;
+        return \dd_trace_forward_call();
     });
 
     // Composer auto-generates a class loader with a varying name which follows the pattern
